@@ -1,3 +1,31 @@
+{% extends "base.html" %}
 
+{% block content %}
 <h1> this is home page of products. </h1>
 <p> this is product name: {{ object.name }} and it is product price: {{ object.price }}. what is its id: {{ object.id }} </p>
+{% endblock content %}
+
+{% block content2 %}
+<ul>
+{% for item in my_list %}
+        <a href="https://www.google.com"><li>this is number {{ item }}</li></a>
+{% endfor %}
+</ul>
+{% endblock content2 %}
+
+{% block objects_list %}
+<ul>
+    {% for obj in objects %}
+    <a href="/products/{{ obj.id }}"><li>{{ obj.name }}</li></a>
+    {% endfor %}
+</ul>
+{% endblock objects_list %}
+
+{% block form %}
+<form action="/products/search">
+    <input type="text" name ='name'>
+    <br>
+    <input type="text" name ='price'>
+    <input type="submit">
+</form>
+{% endblock form %}
