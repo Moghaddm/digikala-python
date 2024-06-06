@@ -2,8 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from random import randint
 from django.template.loader import render_to_string,get_template
+from products.forms import ProductForm
 from products.models import Product
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -52,17 +54,14 @@ def search_product(request):
     
     return HttpResponse(render(request,"products/search.html",context=context))
 
+@login_required
 def create_product(request):
-    context = {}
-    if request.method == "POST":
-        print(request.method+"---------------------")   
-        name = request.POST['name']
-        description = request.POST['description']
-        price = request.POST['price']
-        product = Product.objects.create(name =name,description=description,price=price)
+    form = ProductForm(request.POST or None)
+    context = { "form" : form }
+    if form.is_valid():
+        product = form.save()
         context['object'] = product
-        context['created']  =True
-        
+        context['created'] = True
     return render(request,"products/create.html",context=context)
         
     

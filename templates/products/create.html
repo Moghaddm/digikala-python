@@ -1,23 +1,20 @@
 {% extends "base.html" %}
 
-
 {% block create %}
 
+
 {% if not created %}
-<div style="margin-top: 40px;">
-    <form action="." method="POST">   
-    {% csrf_token %}
+<div style="margin-top: 40px;margin-left: 30px;">
+    <form action="." method="POST">{% csrf_token %}
+        {{ form.as_p }}
     <div>
-        <input name="name" type="text" placeholder="product name">
-        <textarea name="description">product description</textarea>
-        <input name = "price" type="text" placeholder="product price">
         <button type="submit">create product </button>
     </div>
-</form>
+</form> 
 </div>
 {% else %}
 
-<a href='products/{{ object.id }}'><h1>product {{ object.name }} is created successfully.</h1></a>
+<a href='/products/{{ object.id }}'><h1>product {{ object.name }} is created successfully.</h1></a>
 
 {% endif %}
 
