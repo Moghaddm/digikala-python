@@ -2,23 +2,17 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 
 # Create your views here.
 
 def login_view(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request,username=username,password=password)
-        if user is None:
-            context = {
-                "error" : "Invalid username or password."
-            }
-            return HttpResponse(render(request,"accounts/login.html",context))
+    form = AuthenticationForm(request,data = request.POST)
+    if form.is_valid():
+        user = form.get_user()
         login(request,user)
         return redirect('/products')
-    return HttpResponse(render(request,"accounts/login.html",{}))
+    return HttpResponse(render(request,"accounts/login.html",{ "form" : form }))
 
 def logout_view(request):
     if request.method == 'POST':

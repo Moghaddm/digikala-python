@@ -3,21 +3,12 @@
 {% block content %}
 {% if not request.user.is_authenticated %}
 <div>
-    {% if error %}
-        <p>{{ error }}</p>
-    {% else %}
-        <form method="POST">{% csrf_token %}
-            <div>
-            <input type="text" name="username" placeholder="Username">
-        </div>
-        <div>
-            <input type="password" name="password" placeholder="Password">
-        </div>
-        <div>
-            <button>Login</button>
-        </div>
-    {% endif %}
-</form>
+    <form action="." method="post"> {% csrf_token %}
+    <div>
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </div>
+    </form>
 </div>
 {% else %}
 <p>you are already logged in. do you want to <a href="/logout">logout?</a></p>
