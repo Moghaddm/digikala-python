@@ -3,19 +3,12 @@
 {% block create %}
 
 
-{% if not created %}
 <div style="margin-top: 40px;margin-left: 30px;">
-    <form action="." method="POST">{% csrf_token %}
+    <form method="POST">{% csrf_token %}
         {{ form.as_p }}
     <div>
         <button type="submit">create product </button>
     </div>
 </form> 
 </div>
-{% else %}
-
-<a href='/products/{{ object.id }}'><h1>product {{ object.name }} is created successfully.</h1></a>
-
-{% endif %}
-
 {% endblock create %}
