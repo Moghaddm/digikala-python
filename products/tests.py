@@ -26,3 +26,8 @@ class ProductTestCase(TestCase):
         obj.save()
         self.assertEqual(obj.name,'mobile')
         
+    def test_search_product(self):
+        queryset = Product.products.search('short')
+        self.assertEqual(len(queryset),1)
+        
+        

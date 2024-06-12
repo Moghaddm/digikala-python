@@ -6,14 +6,12 @@ from products.models import Product
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist,MultipleObjectsReturned
+from django.db.models.query import Q
 
 # Create your views here.
 
 def home_view(request):
-    context = {
-        "my_list":[1,2,3,4,5,6],
-        "objects" : Product.products.all()
-        }
+    context = { "my_list":[1,2,3,4,5,6],"objects" : Product.products.all() }
     template = get_template("products/home-view.html")
     result = template.render(context=context)
     return HttpResponse(result)
@@ -35,10 +33,8 @@ def product_details(request, product_slug=None):
 def search_product(request):
     query = request.GET
     name = query.get('name')
-    qs = Product.products.all()
-    if name is not '':
-        qs = qs.filter(name__startswith=name)
-    context= {"objects" : qs}
+    if name is not '': queryset = Product.products.search(query=name)
+    context= {"objects" : queryset}
     return HttpResponse(render(request,"products/search.html",context=context))
 
 @login_required
@@ -71,7 +67,6 @@ def delete_product(request,product_id):
     product = Product.products.get(pk = product_id)
     product.delete()
     return redirect('/products')  
-    # return HttpResponse("<h1>cannot delete</h1>")    
     
 
         

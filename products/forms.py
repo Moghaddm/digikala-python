@@ -11,16 +11,9 @@ class ProductForm(forms.ModelForm):
         
     def clean(self):
         cleaned_data = self.cleaned_data
-        
-        print(cleaned_data.get('name'))
-        
         if len(cleaned_data.get('name')) < 2: 
             self.add_error('name','cannot set name of product less than 2 charachters.')
-        # if len(cleaned_data['description']) < 5:
-        #     self.add_error('description','cannot set description of product less than 5 charachters.')
-            
         return cleaned_data    
-        
 
 class ProductFormOld(forms.Form):
     name = forms.CharField()
@@ -36,13 +29,10 @@ class ProductFormOld(forms.Form):
     
     def clean(self):
         cleaned_data = self.cleaned_data
-        
-        print(cleaned_data.get('name'))
-        
         if len(cleaned_data.get('name')) < 2: 
             self.add_error('name','cannot set name of product less than 2 charachters.')
         if len(cleaned_data['description']) < 5:
             self.add_error('description','cannot set description of product less than 5 charachters.')
-            
         return cleaned_data    
+    
         

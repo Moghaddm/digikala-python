@@ -16,7 +16,7 @@
 {% block objects_list %}
 <ul>
     {% for obj in objects %} 
-    <a href='{% url "details" product_slug=obj.slug %}'><li>{{ obj.name }}</li></a>
+    <a href='{% url "product-details" product_slug=obj.slug %}'><li>{{ obj.name }}</li></a>
     {% endfor %}
 </ul>
 {% endblock objects_list %}

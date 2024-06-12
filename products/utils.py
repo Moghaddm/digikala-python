@@ -1,6 +1,6 @@
 
 from django.utils.text import slugify
-from random import random
+import random
 
 def slugify_product_name(instance,save=False,new_slug=None):
     if new_slug is None:
